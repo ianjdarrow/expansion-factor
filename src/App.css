@@ -16,3 +16,6 @@ body {
 .selector-row {
   display: flex;
 }
+label {
+  margin-right: 1em;
+}

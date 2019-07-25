@@ -4,6 +4,20 @@ import Selector from './components/selector';
 import { getPricesForRanges } from './data/calculator';
 import './App.css';
 
+const initialState = {
+  AWSPricePerPB: 23000.0,
+  hdCostPerPB: 20000.0,
+  hdDepreciationInMonths: 36,
+  sealingHwCostPerGBHr: 10.0,
+  sealingHwDepreciationInMonths: 36,
+  totalBlockRewardPerMonth: 12500000,
+  avgContractDurationInMonths: 12,
+  expansionFactor: 2.3,
+  minNetworkSizeInEB: 1,
+  maxNetworkSizeInEB: 20,
+  minFilPriceInUSD: 0,
+  maxFilPriceInUSD: 15
+};
 const ranges = {
   AWSPricePerPB: [0, 50000, 1000],
   hdCostPerPB: [0, 100000, 1000],
@@ -20,18 +34,7 @@ const ranges = {
 class App extends React.Component {
   state = {
     vars: {
-      AWSPricePerPB: 23000.0,
-      hdCostPerPB: 20000.0,
-      hdDepreciationInMonths: 36,
-      sealingHwCostPerGBHr: 10.0,
-      sealingHwDepreciationInMonths: 36,
-      totalBlockRewardPerMonth: 12500000,
-      avgContractDurationInMonths: 12,
-      expansionFactor: 2.3,
-      minNetworkSizeInEB: 1,
-      maxNetworkSizeInEB: 20,
-      minFilPriceInUSD: 0,
-      maxFilPriceInUSD: 15
+      ...initialState
     }
   };
   handleChange = (event, name) => {
@@ -41,6 +44,9 @@ class App extends React.Component {
         [name]: event.target.value
       }
     });
+  };
+  restoreDefaults = () => {
+    this.setState({ vars: { ...initialState } });
   };
   render() {
     const selectors = Object.entries(this.state.vars).map(([name, value]) => {
@@ -64,6 +70,7 @@ class App extends React.Component {
     return (
       <div className="container">
         <Chart vars={this.state.vars} data={data} />
+        <button onClick={this.restoreDefaults}>Reset</button>
         <div className="selectors">{selectors}</div>
       </div>
     );

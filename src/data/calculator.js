@@ -12,7 +12,8 @@ const getBreakEvenPriceAsPercentOfAWS = (
     (totalNetworkSizeInEB * 1e3);
   const hwCost =
     (1e6 * vars.sealingHwCostPerGBHr) /
-    (vars.avgContractDurationInMonths * hoursInMonth);
+    (vars.avgContractDurationInMonths * hoursInMonth) /
+    vars.sealingHwDepreciationInMonths;
   const expansionHdAdvantage = 1 / (vars.expansionFactor - 1);
 
   return Math.min(
